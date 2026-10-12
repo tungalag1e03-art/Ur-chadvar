@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Техник хангамжийн лаб</title>
+  <meta name="description" content="8-р ангийн Мэдээллийн технологи: оруулах, гаргах, санах байгууламжийн хичээлийн апп">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="meta">
+      <span class="eyebrow">Мэдээллийн технологи · 8-р анги</span>
+      <h1>Оруулах, гаргах, санах байгууламж</h1>
+    </div>
+    <div class="chipline"><span class="tag">40 минут</span><span class="tag">Хосоор</span><span class="tag">Gemini AI</span></div>
+  </header>
+
+  <nav class="tabs" aria-label="Хичээлийн хэсгүүд"><div class="row" role="tablist" id="tabs"></div></nav>
+
+  <!-- ЯВЦ -->
+  <section class="panel" id="p-yavts" role="tabpanel">
+    <div class="lead"><h2>Хичээлийн явц</h2><p class="muted">Үе шат дээр дарахад таймер тухайн хугацаагаар эхэлнэ. Ухаалаг самбар дээр нээж ашиглана.</p></div>
+    <div class="timer">
+      <div class="card clock">
+        <span class="eyebrow" id="stName">1. Сэдэлжүүлэлт</span>
+        <div class="big" id="clock">05:00</div>
+        <div class="bar"><i id="clockBar"></i></div>
+        <div class="btns">
+          <button class="btn" id="tStart">Эхлүүлэх</button>
+          <button class="btn ghost" id="tReset">Дахин</button>
+          <button class="btn ghost" id="tNext">Дараагийн үе шат →</button>
+        </div>
+        <p class="muted" id="stDesc"></p>
+      </div>
+      <ul class="stages" id="stages"></ul>
+    </div>
+  </section>
+
+  <!-- АНГИЛАХ -->
+  <section class="panel" id="p-angilah" role="tabpanel" hidden>
+    <div class="lead"><h2>Үүргээр нь ангил</h2><p class="muted">Төхөөрөмж дээр дараад, тохирох хайрцаг дээр дарна уу (эсвэл чирж оруулна). Бүгдийг байрлуулаад «Шалгах» товчийг дар.</p></div>
+    <div class="pool" id="pool" aria-label="Ангилаагүй төхөөрөмжүүд"></div>
+    <div class="bins" id="bins"></div>
+    <div class="btns"><button class="btn" id="chk">Шалгах</button><button class="btn ghost" id="rst">Дахин эхлэх</button><span class="result" id="sortRes" aria-live="polite"></span></div>
+  </section>
+
+  <!-- ҮЗҮҮЛЭЛТ -->
+  <section class="panel" id="p-uzuulelt" role="tabpanel" hidden>
+    <div class="lead"><h2>Үзүүлэлт ба нэгж</h2><p class="muted">Компьютер худалдаж авахдаа эдгээр тоог харна. Нэгжийг нь зөв мэдэх нь хамгийн чухал.</p></div>
+    <div class="specgrid" id="specs"></div>
+    <div class="demo">
+      <div class="card race">
+        <h3>Санах ойн хурдны уралдаан</h3>
+        <p class="muted">Файлын хэмжээг сонгоод «Хуулах» дарна уу. Хурд нь MB/s-ээр.</p>
+        <label for="gb" class="mono">Файл: <b id="gbv">50</b> GB</label>
+        <input type="range" id="gb" min="1" max="200" value="50">
+        <div id="lanes" class="race"></div>
+        <div class="btns"><button class="btn" id="go">Хуулах</button></div>
+      </div>
+      <div class="card res">
+        <h3>Resolution: пикселийн тоо</h3>
+        <p class="muted">Дэлгэцийн нягтрал өндөр байх тусам пиксел олон, дүрс тод.</p>
+        <svg viewBox="0 0 3860 2180" role="img" aria-label="Нягтралын харьцуулалт" id="resSvg"></svg>
+        <div class="legend mono" id="resLeg"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- СУГАЛАА -->
+  <section class="panel" id="p-sugalaa" role="tabpanel" hidden>
+    <div class="lead"><h2>Кэйсийн сугалаа</h2><p class="muted">Хос бүр нэг хүний дүрд орно. Промптыг хуулж Gemini-д оруулаад, дараа нь өөрсдөө тодруулах асуулт бичнэ.</p></div>
+    <div class="draw">
+      <div class="card persona">
+        <div class="slot"><div class="who" id="pWho">?</div><div class="role" id="pRole">«Сугалах» дээр дарна уу</div></div>
+        <p id="pNeed"></p>
+        <div class="budget" id="pBudget"></div>
+        <div class="btns"><button class="btn" id="drawBtn">Сугалах</button></div>
+        <div class="plist" id="plist" aria-label="Бүх кэйс"></div>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;gap:10px;min-width:0">
+        <div class="btns" style="justify-content:space-between"><h3>Промпт 1 — загвар</h3><button class="btn sm" id="copyBtn">Хуулах</button></div>
+        <div class="prompt" id="prompt"></div>
+        <h3>Промпт 2 — өөрсдөө бичих жишээ</h3>
+        <ul style="margin:0;padding-left:20px" id="p2"></ul>
+        <div class="btns"><button class="btn ghost sm" id="tchBtn" aria-expanded="false">Багшид: хүлээгдэж буй үр дүн</button></div>
+        <div class="teacher" id="tch" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ХАРЬЦУУЛАХ -->
+  <section class="panel" id="p-haritsuulah" role="tabpanel" hidden>
+    <div class="lead"><h2>Манай компьютер ба AI-ийн санал</h2><p class="muted">Өөрийн компьютерийн үзүүлэлтийг олж бичээд, Gemini-ийн санал болгосонтой харьцуулна. Энэ компьютер таны кэйсийн хүнд тохирох уу?</p></div>
+    <div class="card"><div class="tablewrap"><table class="cmp"><thead><tr><th>Үзүүлэлт</th><th>Хаанаас харах</th><th>Манай компьютер</th><th>AI-ийн санал</th><th>Тохирох уу?</th></tr></thead><tbody id="cmpBody"></tbody></table></div></div>
+    <div class="sum card"><span id="cmpSum" class="result">Шийдвэр гаргаагүй байна.</span><button class="btn ghost sm" id="cmpClear">Цэвэрлэх</button></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="p-test" role="tabpanel" hidden>
+    <div class="lead"><h2>Мэдлэгээ сори</h2><p class="muted">10 асуулттай жишээ тест. Дараа нь хосоороо 5 тест зохиож, Google Forms-оор бусад хосоор бөглүүлээрэй.</p></div>
+    <div class="card quiz" id="quiz"></div>
+  </section>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

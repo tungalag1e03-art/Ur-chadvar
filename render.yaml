@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: tehnik-hangamj-lab
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
